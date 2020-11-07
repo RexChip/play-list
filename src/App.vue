@@ -193,10 +193,20 @@ export default {
           rel: 0 // 不顯示相關影片
         },
         events: {
-          // onReady: this.playVideo,
+          onReady: this.playVideo,
           onStateChange: this.onStateChange
         }
       });
+    },
+    onStateChange(event) {
+      const vm = this;
+
+      // event.data 回傳現在影片的狀態 -1 尚未開始, 0 結束, 1 正在播放, 2 暫停
+      if (event.data === 0 && vm.videos.isRepeat) {
+        vm.player.playVideo();
+      } else if (event.data === 0) {
+        vm.nextVideo();
+      }
     },
     changeVideo(id, index) {
       this.currentVideo.id = id;
@@ -368,7 +378,7 @@ export default {
   created() {
     setTimeout(() => {
       this.setVideo();
-    }, 1000);
+    }, 1500);
   }
 };
 </script>
