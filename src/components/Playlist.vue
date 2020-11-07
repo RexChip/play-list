@@ -7,6 +7,7 @@
           v-for="(item, index) in computedList"
           :key="index"
           @click="changeVideo(item.id, index)"
+          @mouseleave="checkStatus(index)"
         >
           <div class="total__img">
             <img :src="item.imgSrc" />
@@ -107,6 +108,11 @@ export default {
     changeStatus(index) {
       this.computedList[index].addOtherStatus = !this.computedList[index]
         .addOtherStatus;
+    },
+    checkStatus(index) {
+      if (this.computedList[index].addOtherStatus === true) {
+        this.computedList[index].addOtherStatus = false;
+      }
     },
     addOtherVideo(index) {
       this.addDatas.active = true;
@@ -306,6 +312,7 @@ export default {
 
       background-color: #fff;
       box-shadow: 0 0 10px rgba(#000, 0.15);
+      transition: all 0.3s;
       cursor: pointer;
 
       padding: {
@@ -313,6 +320,11 @@ export default {
         left: 15px;
         right: 15px;
         bottom: 10px;
+      }
+
+      &:hover {
+        background-color: $color-one;
+        color: #fff;
       }
 
       &.is-active {
