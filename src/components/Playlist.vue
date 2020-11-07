@@ -30,8 +30,9 @@
               <div
                 class="total-modify__box"
                 :class="{ 'is-active': item.addOtherStatus }"
+                @click="addOtherVideo(index)"
               >
-                <div class="total-modify__item" @click="addOtherVideo(index)">
+                <div class="total-modify__item">
                   新增到其他列表
                 </div>
               </div>
