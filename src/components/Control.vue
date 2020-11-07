@@ -47,14 +47,14 @@ export default {
   props: ["title", "random", "repeat"],
   computed: {
     returnTitle() {
-      return this.title
+      return this.title;
     },
     returnRandom() {
       return this.random;
     },
     returnRepeat() {
       return this.repeat;
-    },
+    }
   },
   methods: {
     playVideo() {
@@ -111,34 +111,37 @@ export default {
   &__box {
     display: flex;
     gap: $gap-small;
-  }
 
-  &__prev,
-  &__play,
-  &__pause,
-  &__next,
-  &__random,
-  &__repeat {
-    flex-shrink: 0;
+    > div {
+      flex-shrink: 0;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    width: 40px;
-    height: 40px;
+      width: 40px;
+      height: 40px;
 
-    font-size: 12px;
-    color: #ababab;
+      font-size: 12px;
+      color: #ababab;
 
-    border-radius: 50%;
-    border: solid 2px #ababab;
-    transition: all 0.3s;
-    cursor: pointer;
+      border-radius: 50%;
+      border: solid 2px #ababab;
+      transition: all 0.3s;
+      cursor: pointer;
 
-    @media (max-width: 991px) {
-      width: 30px;
-      height: 30px;
+      @media (min-width: 992px) {
+        &:hover {
+          background-color: $color-one;
+          border-color: $color-one;
+          color: #fff;
+        }
+      }
+
+      @media (max-width: 991px) {
+        width: 35px;
+        height: 35px;
+      }
     }
   }
 
@@ -153,49 +156,7 @@ export default {
     }
   }
 
-  &__prev {
-    border: solid 2px $color-one;
-    color: $color-one;
-    &:hover {
-      background-color: $color-one;
-      color: #fff;
-    }
-  }
-
-  &__play {
-    border: solid 2px $color-one;
-    color: $color-one;
-    &:hover {
-      background-color: $color-one;
-      color: #fff;
-    }
-  }
-
-  &__pause {
-    border: solid 2px $color-one;
-    color: $color-one;
-
-    &:hover {
-      background-color: $color-one;
-      color: #fff;
-    }
-  }
-
-  &__next {
-    border: solid 2px $color-one;
-    color: $color-one;
-
-    &:hover {
-      background-color: $color-one;
-      color: #fff;
-    }
-  }
-
   &__random {
-    &:hover {
-      opacity: 0.9;
-    }
-
     &.isRandom {
       border-color: $color-two;
       background-color: $color-two;
@@ -204,10 +165,6 @@ export default {
   }
 
   &__repeat {
-    &:hover {
-      opacity: 0.9;
-    }
-
     &.isRepeat {
       border-color: $color-two;
       background-color: $color-two;

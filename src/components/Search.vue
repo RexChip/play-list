@@ -100,35 +100,39 @@ export default {
     }
   }
 
+  @media (max-width: 767px) {
+    max-width: 100%;
+
+    padding: {
+      left: 60px;
+    }
+  }
+
   input {
     width: 100%;
 
     font-size: 16px;
-    line-height: 30px;
+    line-height: 28px;
     outline: none;
 
-    border: {
-      top: none;
-      left: none;
-      right: none;
-      bottom: solid 1px #56c3b7;
-    }
+    border: solid 1px #eee;
 
     padding: {
-      top: 4px;
-      left: 5px;
+      top: 5px;
+      left: 10px;
       right: 65px;
       bottom: 5px;
     }
 
     @media (max-width: 991px) {
-      line-height: 20px;
+      font-size: 14px;
     }
 
     &::placeholder {
       font-family: "Roboto", "Noto Sans TC";
       font-size: 14px;
       font-weight: 300;
+      color: #999;
     }
   }
 
@@ -144,13 +148,15 @@ export default {
     cursor: pointer;
     transition: all 0.3s;
 
-    @media (max-width: 991px) {
-      width: 50px;
-      line-height: 30px;
+    @media (min-width: 992px) {
+      &:hover {
+        background-color: #d45729;
+      }
     }
 
-    &:hover {
-      background-color: #d45729;
+    @media (max-width: 991px) {
+      width: 50px;
+      font-size: 14px;
     }
   }
 }

@@ -142,25 +142,33 @@ export default {
     position: relative;
     width: 100%;
 
-    &::before {
-      content: "";
-      display: block;
-      width: 100%;
-      padding-top: 131.25%;
+    @media (min-width: 992px) {
+      &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        padding-top: 131.25%;
+      }
     }
   }
 
   &__list {
-    // flex-grow: 1;
-
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
 
     width: 100%;
     height: 100%;
 
     overflow-y: auto;
+
+    @media (min-width: 992px) {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    @media (max-width: 991px) {
+      max-height: 50vh;
+    }
 
     &::-webkit-scrollbar {
       width: 8px;
