@@ -1,5 +1,7 @@
 <template>
   <div class="other" v-if="otherStates">
+    <div class="other__mask" @click="states = false"></div>
+
     <div class="other__list">
       <div class="other__item" v-for="(item, index) in list" :key="index">
         <p v-if="index !== propListIndex" @click="addToOther(index)">
@@ -34,7 +36,7 @@ export default {
   },
   computed: {
     otherStates() {
-      return this.states && (this.propList.length - 1) > 0
+      return this.states && this.propList.length - 1 > 0;
     }
   },
   created() {
@@ -56,20 +58,42 @@ export default {
 
 .other {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: 0;
 
-  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  box-shadow: 0 0 15px rgba(#000, 0.15);
+  width: 100%;
+  height: 100%;
 
-  padding: {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+  z-index: 2;
+
+  &__mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(black, 0.3);
+  }
+
+  &__list {
+    position: relative;
+
+    width: 80%;
+    max-width: 300px;
+
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(#000, 0.15);
+
+    padding: {
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+    }
   }
 
   p {
