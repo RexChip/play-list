@@ -21,9 +21,20 @@
           @emit-repeat="isRepeat"
         />
 
-        <div class="main__copy" v-if="secretTechnique.active">
-          <span @click="copyInfo">複製播放清單</span>
-          <input class="main__copy-input" />
+        <div class="main__secret" v-if="secretTechnique.active">
+          <div class="main__add">
+            <input
+              type="text"
+              class="main__add-input"
+              v-model="secretTechnique.tempInfo"
+            />
+            <span @click="getInfo">新增</span>
+          </div>
+
+          <div class="main__copy">
+            <span @click="copyInfo">複製播放清單</span>
+            <input type="text" class="main__copy-input" />
+          </div>
         </div>
       </div>
 
@@ -64,7 +75,7 @@ export default {
     Control,
     Playlist,
     MenuArea,
-    AddToOther
+    AddToOther,
   },
   data() {
     return {
@@ -72,7 +83,7 @@ export default {
       videos: {
         isRandom: false,
         isRepeat: false,
-        list: []
+        list: [],
       },
       list: [],
       currentVideo: {
@@ -80,17 +91,18 @@ export default {
         title: "",
         index: 0,
         listIndex: 0,
-        list: []
+        list: [],
       },
       activeState: {
         more: false,
-        other: false
+        other: false,
       },
       secretTechnique: {
         active: false,
         code: "38384040373937396665",
-        temp: ""
-      }
+        temp: "",
+        tempInfo: "",
+      },
     };
   },
   methods: {
@@ -134,7 +146,7 @@ export default {
 
       if (!vm.videos.isRandom) {
         // 用 findIndex 找 array 裡面的值的 index
-        let tempIndex = _video.list.findIndex(item => item.id === _video.id);
+        let tempIndex = _video.list.findIndex((item) => item.id === _video.id);
 
         if (tempIndex - 1 !== -1) {
           tempIndex -= 1;
@@ -158,7 +170,7 @@ export default {
       let _video = vm.currentVideo;
 
       if (!vm.videos.isRandom) {
-        let tempIndex = _video.list.findIndex(item => item.id === _video.id);
+        let tempIndex = _video.list.findIndex((item) => item.id === _video.id);
 
         if (tempIndex + 1 === _video.list.length) {
           tempIndex = 0;
@@ -180,7 +192,7 @@ export default {
     },
     loadVideo(changeId) {
       this.player.loadVideoById({
-        videoId: changeId
+        videoId: changeId,
       });
     },
     setVideo() {
@@ -190,12 +202,12 @@ export default {
         videoId: this.currentVideo.id,
         playerVars: {
           id_load_policy: 3, // 不顯示影片註解
-          rel: 0 // 不顯示相關影片
+          rel: 0, // 不顯示相關影片
         },
         events: {
           onReady: this.playVideo,
-          onStateChange: this.onStateChange
-        }
+          onStateChange: this.onStateChange,
+        },
       });
     },
     onStateChange(event) {
@@ -214,7 +226,7 @@ export default {
       this.currentVideo.title = this.currentVideo.list[index].title; // 修改當前標題文字
 
       this.player.loadVideoById({
-        videoId: id
+        videoId: id,
       });
     },
     removeVideo(index) {
@@ -232,6 +244,12 @@ export default {
       _temp.select();
       document.execCommand("copy");
       _temp.value = "";
+    },
+    getInfo() {
+      const vm = this;
+      vm.saveInfo("play-videos", JSON.parse(vm.secretTechnique.tempInfo));
+
+      vm.secretTechnique.tempInfo = "";
     },
     // menu methods
     changeCurrentList(index) {
@@ -265,12 +283,12 @@ export default {
     },
     saveInfo(storage, item) {
       return localStorage.setItem(storage, JSON.stringify(item));
-    }
+    },
   },
   computed: {
     currentTitle() {
       return this.currentVideo.title;
-    }
+    },
   },
   mounted() {
     const vm = this;
@@ -302,7 +320,7 @@ export default {
               imgSrc: "https://i.ytimg.com/vi/DA5NLKYDxfQ/default.jpg",
               title: "昏鴉 - 王國三部曲之壹 《萬中選一的青年》Lyrics Video",
               duration: "PT4M30S",
-              addOtherStatus: false
+              addOtherStatus: false,
             },
             {
               id: "YRhkduoNlzA",
@@ -310,7 +328,7 @@ export default {
               imgSrc: "https://i.ytimg.com/vi/YRhkduoNlzA/default.jpg",
               title: "昏鴉 - 王國三部曲之貳 《為了已死去的王子》Lyrics Video",
               duration: "PT5M12S",
-              addOtherStatus: false
+              addOtherStatus: false,
             },
             {
               id: "zmsnipltJTM",
@@ -318,10 +336,10 @@ export default {
               imgSrc: "https://i.ytimg.com/vi/zmsnipltJTM/default.jpg",
               title: "昏鴉 - 王國三部曲之參 《願你的王國榮耀》Lyrics Video",
               duration: "PT5M24S",
-              addOtherStatus: false
-            }
-          ]
-        }
+              addOtherStatus: false,
+            },
+          ],
+        },
       ];
 
       vm.videos.list = initVideo;
@@ -334,11 +352,11 @@ export default {
       vm.saveInfo("play-videos", vm.videos);
     }
 
-    vm.videos.list.forEach(item => {
+    vm.videos.list.forEach((item) => {
       vm.list.push(item.title);
     });
 
-    window.addEventListener("keydown", function(e) {
+    window.addEventListener("keydown", function (e) {
       if (vm.secretTechnique.active == false) {
         switch (e.keyCode) {
           case 37:
@@ -379,7 +397,7 @@ export default {
     setTimeout(() => {
       this.setVideo();
     }, 1500);
-  }
+  },
 };
 </script>
 
