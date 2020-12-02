@@ -12,7 +12,7 @@
       <div
         title="Play"
         class="control__play"
-        v-if="playing == false"
+        v-if="returnPlaying == false"
         @click="playVideo"
       >
         <i class="fa fa-play" aria-hidden="true"></i>
@@ -21,7 +21,7 @@
       <div
         title="Pause"
         class="control__pause"
-        v-if="playing == true"
+        v-if="returnPlaying == true"
         @click="pauseVideo"
       >
         <i class="fa fa-pause" aria-hidden="true"></i>
@@ -54,10 +54,10 @@
 
 <script>
 export default {
-  props: ["title", "random", "repeat"],
+  props: ["title", "random", "repeat", "playing"],
   data() {
     return {
-      playing: false,
+      isPlaying: this.playing,
     };
   },
   computed: {
@@ -70,14 +70,17 @@ export default {
     returnRepeat() {
       return this.repeat;
     },
+    returnPlaying() {
+      return this.playing;
+    },
   },
   methods: {
     playVideo() {
-      this.playing = !this.playing;
+      this.returnPlaying = !this.returnPlaying;
       this.$emit("emit-play");
     },
     pauseVideo() {
-      this.playing = !this.playing;
+      this.returnPlaying = !this.returnPlaying;
       this.$emit("emit-pause");
     },
     stopVideo() {

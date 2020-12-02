@@ -12,6 +12,7 @@
           :title="currentTitle"
           :random="videos.isRandom"
           :repeat="videos.isRepeat"
+          :playing="activeState.playing"
           @emit-play="playVideo"
           @emit-pause="pauseVideo"
           @emit-stop="stopVideo"
@@ -97,6 +98,7 @@ export default {
       activeState: {
         more: false,
         other: false,
+        playing: false,
       },
       secretTechnique: {
         active: false,
@@ -219,6 +221,12 @@ export default {
         vm.player.playVideo();
       } else if (event.data === 0) {
         vm.nextVideo();
+      }
+
+      if (event.data === 1) {
+        this.activeState.playing = !this.activeState.playing;
+      } else if (event.data === 2) {
+        this.activeState.playing = !this.activeState.playing;
       }
     },
     changeVideo(id, index) {
