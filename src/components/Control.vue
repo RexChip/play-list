@@ -9,11 +9,21 @@
         <i class="fa fa-step-backward" aria-hidden="true"></i>
       </div>
 
-      <div title="Play" class="control__play" @click="playVideo">
+      <div
+        title="Play"
+        class="control__play"
+        v-if="playing == false"
+        @click="playVideo"
+      >
         <i class="fa fa-play" aria-hidden="true"></i>
       </div>
 
-      <div title="Pause" class="control__pause" @click="pauseVideo">
+      <div
+        title="Pause"
+        class="control__pause"
+        v-if="playing == true"
+        @click="pauseVideo"
+      >
         <i class="fa fa-pause" aria-hidden="true"></i>
       </div>
 
@@ -45,6 +55,11 @@
 <script>
 export default {
   props: ["title", "random", "repeat"],
+  data() {
+    return {
+      playing: false,
+    };
+  },
   computed: {
     returnTitle() {
       return this.title;
@@ -54,13 +69,15 @@ export default {
     },
     returnRepeat() {
       return this.repeat;
-    }
+    },
   },
   methods: {
     playVideo() {
+      this.playing = !this.playing;
       this.$emit("emit-play");
     },
     pauseVideo() {
+      this.playing = !this.playing;
       this.$emit("emit-pause");
     },
     stopVideo() {
@@ -84,8 +101,8 @@ export default {
     saveLocalInfo(el) {
       const vm = this;
       return localStorage.setItem(el, JSON.stringify(vm.videoInfo));
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -93,15 +110,75 @@ export default {
 @import "@/scss/_var.scss";
 
 .control {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+
   display: flex;
-  gap: $gap-small;
+  align-items: center;
+  flex-direction: column;
+  gap: $gap;
+
+  width: 100%;
+  max-width: 740px;
+
+  background-color: #fff;
+  box-shadow: 0 3px 10px rgba(#000, 0.1);
+
+  transition: all 0.3s ease-in-out;
+  transform: translate(-50%, 0);
+
+  z-index: 1;
 
   padding: {
-    top: $gap-small;
+    top: $gap;
+    left: $gap;
+    right: $gap;
+    bottom: $gap;
+  }
+
+  @media (min-width: 992px) {
+    transform: translate(-50%, calc(#{$gap} + 40px));
+
+    padding: {
+      left: calc(#{$gap} * 3);
+      right: calc(#{$gap} * 3);
+    }
+
+    &:hover {
+      transform: translate(-50%, 0);
+
+      &::before {
+        transform: rotate(225deg);
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + #{$gap});
+
+      width: 10px;
+      height: 10px;
+
+      transition: all 0.3s ease;
+      transform: rotate(45deg);
+
+      border: {
+        top: solid 3px $color-two;
+        left: solid 3px $color-one;
+      }
+
+      margin: {
+        left: -5px;
+      }
+    }
   }
 
   @media (max-width: 991px) {
-    flex-direction: column;
+    width: calc(100% - 6%);
+    box-shadow: 0 0 10px rgba(#000, 0.15);
 
     padding: {
       top: $gap;
@@ -123,17 +200,19 @@ export default {
       height: 40px;
 
       font-size: 12px;
-      color: #ababab;
+      color: #cdcdcd;
 
       border-radius: 50%;
-      border: solid 2px #ababab;
+      box-shadow: 3px 3px 6px #dedede;
       transition: all 0.3s;
       cursor: pointer;
+
+      transition: all 0.3 ease-in-out;
 
       @media (min-width: 992px) {
         &:hover {
           background-color: $color-one;
-          border-color: $color-one;
+          box-shadow: 0 0 10px rgba($color-one, 0.3);
           color: #fff;
         }
       }
@@ -149,7 +228,7 @@ export default {
     flex-grow: 1;
 
     font-size: 22px;
-    line-height: 1.4;
+    text-align: center;
 
     @media (max-width: 991px) {
       font-size: 18px;

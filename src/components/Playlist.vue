@@ -32,9 +32,7 @@
                 :class="{ 'is-active': item.addOtherStatus }"
                 @click="addOtherVideo(index)"
               >
-                <div class="total-modify__item">
-                  新增到其他列表
-                </div>
+                <div class="total-modify__item">新增到其他列表</div>
               </div>
             </div>
 
@@ -59,21 +57,21 @@ export default {
     return {
       addDatas: {
         video: {},
-        active: false
-      }
+        active: false,
+      },
     };
   },
   computed: {
     computedList() {
       return this.currentList;
-    }
+    },
   },
   methods: {
     durationToSeconds(key = "changeToTime", duration) {
       let time = [];
       let match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
 
-      match = match.slice(1).map(function(x) {
+      match = match.slice(1).map(function (x) {
         if (x != null) {
           return x.replace(/\D/, "");
         }
@@ -99,7 +97,7 @@ export default {
       const vm = this;
       let totalDuration = 0;
 
-      vm.computedList.forEach(item => {
+      vm.computedList.forEach((item) => {
         let tempDuration = vm.durationToSeconds("seconds", item.duration);
         totalDuration += tempDuration;
       });
@@ -127,8 +125,8 @@ export default {
     },
     changeVideo(id, index) {
       this.$emit("emit-change", id, index);
-    }
-  }
+    },
+  },
   // beforeDestroy() {
   //   this.$bus.$emit("video:other", this.addDatas);
   // }

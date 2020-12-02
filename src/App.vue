@@ -27,6 +27,7 @@
               type="text"
               class="main__add-input"
               v-model="secretTechnique.tempInfo"
+              @keyup.enter="getInfo"
             />
             <span @click="getInfo">新增</span>
           </div>
@@ -205,7 +206,7 @@ export default {
           rel: 0, // 不顯示相關影片
         },
         events: {
-          onReady: this.playVideo,
+          // onReady: this.playVideo,
           onStateChange: this.onStateChange,
         },
       });

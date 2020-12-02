@@ -3,7 +3,7 @@
     <div class="search__box">
       <input
         type="text"
-        placeholder="請輸入 Youtube 影片網址，新增影片"
+        placeholder="請輸入 Youtube 影片網址"
         v-model="searchInput"
         @keyup.enter="addVideo"
       />
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       searchInput: "",
-      temp: {}
+      temp: {},
     };
   },
   methods: {
@@ -48,7 +48,7 @@ export default {
 
       axios
         .get(newVideoSrc)
-        .then(res => {
+        .then((res) => {
           if (res.data.items === undefined || res.data.items.length === 0) {
             alert(`請輸入正確的 Youtube 影片網址`);
             return false;
@@ -61,7 +61,7 @@ export default {
             title: item.snippet.title,
             duration: item.contentDetails.duration,
             imgSrc: item.snippet.thumbnails.default.url,
-            addOtherStatus: false
+            addOtherStatus: false,
           };
         })
         .finally(() => {
@@ -70,8 +70,8 @@ export default {
           vm.$emit("emit-video", vm.temp);
           vm.temp = {};
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -93,6 +93,12 @@ export default {
   padding: {
     bottom: 30px;
   }
+
+  // @media (min-width: 1381px) {
+  //   padding: {
+  //     right: $gap;
+  //   }
+  // }
 
   @media (max-width: 991px) {
     padding: {
@@ -142,11 +148,15 @@ export default {
     right: 0;
     width: 60px;
     line-height: 40px;
-    background-color: #56c3b7;
+    background-color: $color-one;
     color: #fff;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
+
+    // @media (min-width: 1381px) {
+    //     right: $gap;
+    // }
 
     @media (min-width: 992px) {
       &:hover {
